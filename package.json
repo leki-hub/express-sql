@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "A REST API with Nodejs and MySQL",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Leki Emmanuel",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }
