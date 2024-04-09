@@ -2,7 +2,7 @@
   "name": "express-sql",
   "version": "1.0.0",
   "description": "A REST API with Nodejs and MySQL",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
