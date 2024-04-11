@@ -27,6 +27,22 @@ function save(req, res) {
 
 }
 
+function  show(req,res){
+    const  id =req.params.id;
+    models.Post.findOne({where:{id:id}})
+     .then( (post)=> {
+        res.status(200).json(post);
+     }).catch((error)=>{
+        res.status(404).json({message:"The Post with the given ID was not found."});
+     })
+    
+
+}
+
+
+
+
+
 module.exports= {
     savePost:save
 }
