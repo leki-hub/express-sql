@@ -4,10 +4,9 @@ function save(req, res) {
     const post= {
         title: req.body.title,
         content: req.body.content,
-        imageUrl:req.body.imageUrl,
-        categoryId:req.body.categoryId,
-        userID: req.body.userID
-
+        imageUrl:req.body.image_url,
+        categoryId:req.body.category_id,
+        userId: 1
     }
     models.Post.create(post).then(result  =>{
         res.status(201).json({
@@ -29,20 +28,39 @@ function save(req, res) {
 
 function  show(req,res){
     const  id =req.params.id;
-    models.Post.findOne({where:{id:id}})
-     .then( (post)=> {
-        res.status(200).json(post);
-     }).catch((error)=>{
-        res.status(404).json({message:"The Post with the given ID was not found."});
+    models.Post.findByPk(id)
+     .then( (result)=> {
+        res.status(200).json(result);
+     }).catch((err)=>{
+        res.status(500).json({message:"The Post with the given ID was not found."
+       ,error:err
+    });
      })
     
 
 }
 
+function showAll(req ,res) {
+    models.Post.findAll()
+    .then(results=>{
+        res.status(200).json(results)
+    })
+    .catch((err)=>{
+        return res.status(500).json({
+          message : 'Error getting posts',
+          error:err
+         })
+    })
+}
 
+function update(req,res){
+    const  id =req.params.id;
+}
 
 
 
 module.exports= {
-    savePost:save
+    savePost:save,
+    show:show,
+    index:showAll
 }
