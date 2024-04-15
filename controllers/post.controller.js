@@ -31,9 +31,7 @@ function save(req, res) {
             post:result
         
         })
-    }
-
-    )
+    })
         .catch((err)=>{
             res.status(500).json({
                 message:'Something went wrong',
@@ -80,6 +78,22 @@ function update(req,res){
        
     }
     const userId =1;
+
+    const validationSchema =  {
+        title :{ type: "string", max:100 , optional:false },
+        content:{type:"string",min:10, optional:false, message: 'Content is required.'},
+        categoryId:{type:'number', min:"3", message: 'Category id must be a number and should not be empty'},
+        imageUrl:{type:"string",optional:false,message: 'Image url is required'}
+     }
+     const check =v.validate(updatedPost,validationSchema);
+     if (check !== true) {
+        return res.status(400).send({
+            message:"ValidationError",
+            errors: check})
+     } 
+
+
+
     models.Post.update(updatedPost,{where:{id:id, userId:userId}})
 
     .then(result  => {
