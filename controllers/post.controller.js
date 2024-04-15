@@ -62,7 +62,8 @@ function update(req,res){
         categoryId:req.body.category_id,
        
     }
-    models.Post.update(updatedPost,{where:{id:id}})
+    const userId =1;
+    models.Post.update(updatedPost,{where:{id:id, userId:userId}})
 }
 
 
