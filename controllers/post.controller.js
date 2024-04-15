@@ -64,6 +64,19 @@ function update(req,res){
     }
     const userId =1;
     models.Post.update(updatedPost,{where:{id:id, userId:userId}})
+
+    .then(result  => {
+       res.status(200).json(
+        {
+           message :"Updated successfully" ,
+           post:result
+
+        }
+       )
+    }).catch((error)=> {
+        res.status(400).json({message:"Failed to update the Post",
+        error:error})
+    })
 }
 
 
@@ -71,5 +84,6 @@ function update(req,res){
 module.exports= {
     savePost:save,
     show:show,
-    index:showAll
+    index:showAll,
+    updatePost:update
 }
