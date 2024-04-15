@@ -55,6 +55,13 @@ function showAll(req ,res) {
 
 function update(req,res){
     const  id =req.params.id;
+    const updatedPost = {
+        title: req.body.title,
+        content: req.body.content,
+        imageUrl:req.body.image_url,
+        categoryId:req.body.category_id,
+       
+    }
 }
 
 
