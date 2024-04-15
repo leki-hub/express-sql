@@ -1,4 +1,7 @@
 const models = require('../models');
+const Validator = require('fastest-validator')
+const v = new Validator()
+
 
 function save(req, res) {
     const post= {
@@ -8,6 +11,18 @@ function save(req, res) {
         categoryId:req.body.category_id,
         userId: 1
     }
+    const validationSchema =  {
+        title :{ type: "string", max:100 , optional:false },
+        content:{type:"string", optional:false, message: 'Content is required.'},
+        categoryId:{type:'number', min:1, message: 'Category id must be a number and should not be empty'},
+        userId:{type:'number', min:1},
+        imageUrl:{type:"string",}
+     }
+     v.validate(post,validationSchema)
+
+
+
+
     models.Post.create(post).then(result  =>{
         res.status(201).json({
             message:'Post created successully',
@@ -80,10 +95,31 @@ function update(req,res){
 }
 
 
+function destroy(req,res){
+    const  id =req.params.id;
+
+    const userId =1;
+    models.Post.destroy({where:{id:id, userId:userId}})
+
+    .then(result  => {
+       res.status(200).json(
+        {
+           message :"Data deleted successfully" ,
+           post:result
+
+        }
+       )
+    }).catch((error)=> {
+        res.status(400).json({message:"Failed to Delete the Post",
+        error:error})
+    })
+}
+
 
 module.exports= {
     savePost:save,
     show:show,
     index:showAll,
-    updatePost:update
+    updatePost:update,
+    delete:destroy
 }
