@@ -13,15 +13,17 @@ function save(req, res) {
     }
     const validationSchema =  {
         title :{ type: "string", max:100 , optional:false },
-        content:{type:"string", optional:false, message: 'Content is required.'},
-        categoryId:{type:'number', min:1, message: 'Category id must be a number and should not be empty'},
-        userId:{type:'number', min:1},
-        imageUrl:{type:"string",}
+        content:{type:"string",min:10, optional:false, message: 'Content is required.'},
+        categoryId:{type:'number', min:"3", message: 'Category id must be a number and should not be empty'},
+        imageUrl:{type:"string",optional:false,message: 'Image url is required'}
      }
-     v.validate(post,validationSchema)
-
-
-
+     const check =v.validate(post,validationSchema);
+     if (check !== true) {
+        return res.status(400).send({
+            message:"ValidationError",
+            errors: check})
+     } 
+ 
 
     models.Post.create(post).then(result  =>{
         res.status(201).json({
