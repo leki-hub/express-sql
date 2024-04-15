@@ -62,6 +62,7 @@ function update(req,res){
         categoryId:req.body.category_id,
        
     }
+    models.Post.update(updatedPost,{where:{id:id}})
 }
 
 
