@@ -7,7 +7,7 @@ const app = express()
 
 app.use(bodyParser.json())
 app.use('/posts', postsRoute)
-app.use('/users', userRoute)
+app.use('/user', userRoute)
 app.get('/', (req, res)=>{
     res.send({message: "Welcome"})
 })
