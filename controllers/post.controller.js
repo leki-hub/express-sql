@@ -113,8 +113,10 @@ function update(req,res){
 
 function destroy(req,res){
     const  id =req.params.id;
+    const userId =req.body.user_id;
 
-    const userId =1;
+
+
     models.Post.destroy({where:{id:id, userId:userId}})
 
     .then(result  => {
@@ -122,7 +124,6 @@ function destroy(req,res){
         {
            message :"Data deleted successfully" ,
            post:result
-
         }
        )
     }).catch((error)=> {
