@@ -19,6 +19,11 @@ function   signup ( req, res ){
         error: err})
    
     })
-    })
+    
 
+}
+
+
+models.exports  = {
+    signup:signup,
 }
