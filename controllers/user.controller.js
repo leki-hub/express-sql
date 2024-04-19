@@ -45,14 +45,18 @@ function signup( req, res ){
 
 
 function login(req,res){
-   const  email= req.body.email
-   const pass = req.body.password;
-   if(!email || !pass) return res.status(400).json({message : 'Missing data'})
 
-   models.User.findOne({
-    where:{
-      email: email,password:}
-   })
+    
+        models.User.findOne({  where:{ email: req.body.email} }).then(user=>{
+            if(!user) return res.status(401).json({message:'Email not found'})
+          
+          bcryptjs.compare(req.body.password , user.password)
+        }
+
+        ).catch()
+
+
+    
 
 
     }
@@ -60,4 +64,5 @@ function login(req,res){
 
 module.exports  = {
     signup:signup,
+    login:login
 }
