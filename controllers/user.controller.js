@@ -5,7 +5,6 @@ const bcryptjs= require( "bcrypt" ) ;
 
 function signup( req, res ){
 
-
     models.User.findOne({ where:{ email : req.body.email }}).then(user => {
         if (user) {
             res.status(409).send({message:'Email is already in use'})
@@ -42,14 +41,21 @@ function signup( req, res ){
         error: err})
    
     })
-
-
-
-
-
 }
 
 
+function login(req,res){
+   const  email= req.body.email
+   const pass = req.body.password;
+   if(!email || !pass) return res.status(400).json({message : 'Missing data'})
+
+   models.User.findOne({
+    where:{
+      email: email,password:}
+   })
+
+
+    }
 
 
 module.exports  = {
