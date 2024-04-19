@@ -50,17 +50,33 @@ function login(req,res){
         models.User.findOne({  where:{ email: req.body.email} }).then(user=>{
             if(!user) return res.status(401).json({message:'Email not found'})
           
-          bcryptjs.compare(req.body.password , user.password)
+          bcryptjs.compare(req.body.password , user.password, function(err, result) {
+              if (result) {
+                const token=jwt.sign({
+                   email:user.email,
+                   userId:user.id
+                },'secret',function(err,token){
+                    res.status(200).json(
+                        {
+                            message:"Logged in succesfully",
+                            token:token
+                    });
+                });
+              }
         }
 
-        ).catch()
+        ).catch(err=>{
+            res.status(500).send({ message: "Something went wrong",
+            error: err})
+        })
 
 
     
 
 
-    }
+    })
 
+}
 
 module.exports  = {
     signup:signup,
